@@ -15,28 +15,26 @@ public class AddVectors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 start = new Vector2(0f, 0f);
+        Vector2 origin = new Vector2(0f, 0f);
 
+        // Click R and draw red line to R
         Vector2 red = R.position;
-
-        Vector2 blue = B.position;
-
-        Vector2 both = red + blue;
-
-
         if (Input.GetKey(KeyCode.R))
         {
-            Debug.DrawLine(start, red, Color.red);
+            Debug.DrawLine(origin, red, Color.red);
         }
-
+         // Click B and draw blue line to B
+        Vector2 blue = B.position;
         if (Input.GetKey(KeyCode.B))
         {
-            Debug.DrawLine(start, blue, Color.blue);
+            Debug.DrawLine(origin, blue, Color.blue);
         }
 
-        if(Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.B))
+        // Draw a middle line of sum of rect R and B
+        Vector2 both = red + blue;
+        if (Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.B))
         {
-            Debug.DrawLine(start, both, Color.magenta);
+            Debug.DrawLine(origin, both, Color.magenta);
         }
 
 

@@ -14,12 +14,14 @@ public class LineDrawer : MonoBehaviour
         
         Debug.Log("Hello, World!");
 
+        //Draw first line.
         Vector2 start = new Vector2(0f, 0f);
 
         Vector2 end = new Vector2(0f, 1f);
 
         Debug.DrawLine(start, end, Color.yellow);
 
+        //Draw second line.
         end = new Vector2(3f, -2f);
 
         Debug.DrawLine(start, end, Color.grey);
