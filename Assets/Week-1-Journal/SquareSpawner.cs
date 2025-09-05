@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class SquareSpawner : MonoBehaviour
 {
+    public Transform mouseSquare; //Semi-square that follows the mouse
 
     void Update()
     {
-        int length = 2;
+        float length = mouseSquare.localScale.x;
 
         //Get the middle point of square spawning (mousePos)
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseSquare.position = mousePos; //Semi-Square follows mouse
 
         //Get four points around mousePos that combine a quare
         //I use 5 as the value of each length of the square
