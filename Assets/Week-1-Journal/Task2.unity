@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 1917077591}
   - component: {fileID: 1917077590}
   m_Layer: 5
-  m_Name: Button
+  m_Name: GenerateButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1157,7 +1157,7 @@ GameObject:
   - component: {fileID: 2116845867}
   - component: {fileID: 2116845866}
   m_Layer: 5
-  m_Name: GenerateButton
+  m_Name: Instruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
