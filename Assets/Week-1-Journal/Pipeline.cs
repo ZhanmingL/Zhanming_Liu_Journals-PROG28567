@@ -5,6 +5,7 @@ public class Pipeline : MonoBehaviour
     float time = 0;
 
     Vector2 mousePos;
+    Vector2 pastPos;
 
     bool firstDraw = true;
 
@@ -35,17 +36,22 @@ public class Pipeline : MonoBehaviour
 
                 Debug.DrawLine(mousePos, newPos, Color.white, 5);
 
-                firstDraw = true;
+                pastPos = newPos;
 
                 time = 0;
+
+                firstDraw = true;
             }
-            else
+
+            if (firstDraw == true)
             {
                 if (time >= 0.1f)
                 {
                     Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                    Debug.DrawLine(newPos, newPos, Color.white, 5);
+                    Debug.DrawLine(pastPos, newPos, Color.white, 5);
+
+                    pastPos = newPos;
 
                     time = 0;
                 }
