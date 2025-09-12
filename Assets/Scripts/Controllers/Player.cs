@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.T))
         {
-            Vector2 trailSpacing = new Vector2(0, bombTrailSpacing);
+            //The first bomb prefab spawns between a distance of bombTrailSpacing below the player.
+            Vector2 trailSpacing = new Vector2(0, bombTrailSpacing); //I created this vector to represent the distance.
             SpawnBombTrail(trailSpacing);
         }
 
@@ -53,12 +55,15 @@ public class Player : MonoBehaviour
 
     public void SpawnBombTrail(Vector2 spacing)
     {
+        //I used player's initial pos minus the spacing(shift down) to represent the first position to spawn.
         Vector2 spawnTrailPos = (Vector2)transform.position - spacing;
 
         for (int i = 0; i < numberOfTrailBombs; i++)
         {
-            
+            //Spawn bomb. Repeating i times, depending by numberOfTrailBombs.
             Instantiate(bombPrefab, spawnTrailPos, Quaternion.identity);
+            //The next time spawning, new bomb should shift down again by the same spacing
+            //Othrewise they overlap at the same pos.
             spawnTrailPos.y -= spacing.y;
         }
     }
