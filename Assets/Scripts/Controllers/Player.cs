@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombsTransform;
 
+    public float bombTrailSpacing;
+    public int numberOfTrailBombs;
+
 
     void Update()
     {
@@ -24,7 +27,11 @@ public class Player : MonoBehaviour
         }
 
 
-
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            Vector2 trailSpacing = new Vector2(0, bombTrailSpacing);
+            SpawnBombTrail(trailSpacing);
+        }
 
 
 
@@ -44,5 +51,15 @@ public class Player : MonoBehaviour
         Instantiate(bombPrefab, spawnPosition, Quaternion.identity); //Quaternion.identity = no rotation
     }
 
+    public void SpawnBombTrail(Vector2 spacing)
+    {
+        Vector2 spawnTrailPos = (Vector2)transform.position - spacing;
 
+        for (int i = 0; i < numberOfTrailBombs; i++)
+        {
+            
+            Instantiate(bombPrefab, spawnTrailPos, Quaternion.identity);
+            spawnTrailPos.y -= spacing.y;
+        }
+    }
 }
