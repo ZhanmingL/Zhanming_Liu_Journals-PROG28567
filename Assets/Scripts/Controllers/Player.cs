@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public float spacing;
     public int number;
 
+    public float ratio; //ratio of distance moving towards enemy from player's position. I will edit it as 0, 0.5 or 1, so on.
+
     void Update()
     {
         float speed = 0.5f;
@@ -42,6 +44,12 @@ public class Player : MonoBehaviour
             {
                 SpawnBombOnRandomCorner(1); //Randomly spawn bombs at corners. The distance between player and each bomb is 1 (1 means the straight-line distance between them).
             }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            WarpPlayer(enemyTransform, ratio);
         }
 
 
@@ -137,5 +145,10 @@ public class Player : MonoBehaviour
             canSpawn = false; //turn this bool to false, therefore no more bomb will be allowed to spawn.
         }
 
+    }
+
+    public void WarpPlayer(Transform target, float ratio)
+    {
+        transform.position = Vector3.Lerp(transform.position, target.position, ratio); //From player's pos to enemy's pos, ratio for distance.
     }
 }
