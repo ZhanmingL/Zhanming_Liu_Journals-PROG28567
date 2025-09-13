@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public float bombTrailSpacing;
     public int numberOfTrailBombs;
 
+    List<int> randomAccount = new List<int> { 0, 1, 2, 3 };
+    bool canSpawn = true;
 
     void Update()
     {
@@ -38,7 +40,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SpawnBombOnRandomCorner();
+            if (canSpawn == true)
+            {
+                SpawnBombOnRandomCorner();
+            }
         }
 
 
@@ -75,27 +80,36 @@ public class Player : MonoBehaviour
 
     public void SpawnBombOnRandomCorner()
     {
-        int randomNum = Random.Range(0,3);
+        int randomNum = randomAccount[Random.Range(0, randomAccount.Count)];
 
-        if (randomNum == 0)
-        {
-            Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.left, Quaternion.identity);
-        }
+            if (randomNum == 0)
+            {
+                Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.left, Quaternion.identity);
+                randomAccount.Remove(0);
+            }
 
-        if (randomNum == 1)
-        {
-            Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.right, Quaternion.identity);
-        }
+            if (randomNum == 1)
+            {
+                Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.right, Quaternion.identity);
+                randomAccount.Remove(1);
+            }
 
-        if (randomNum == 2)
-        {
-            Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.left, Quaternion.identity);
-        }
+            if (randomNum == 2)
+            {
+                Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.left, Quaternion.identity);
+                randomAccount.Remove(2);
+            }
 
-        if (randomNum == 3)
-        {
-            Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.right, Quaternion.identity);
-        }
+            if (randomNum == 3)
+            {
+                Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.right, Quaternion.identity);
+                randomAccount.Remove(3);
+            }
+
+            if (randomAccount.Count == 0)
+            {
+                canSpawn = false;
+            }
 
     }
 }
