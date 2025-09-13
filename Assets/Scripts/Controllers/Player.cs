@@ -36,6 +36,11 @@ public class Player : MonoBehaviour
         }
 
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SpawnBombOnRandomCorner();
+        }
+
 
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -66,5 +71,31 @@ public class Player : MonoBehaviour
             //Othrewise they overlap at the same pos.
             spawnTrailPos.y -= spacing.y;
         }
+    }
+
+    public void SpawnBombOnRandomCorner()
+    {
+        int randomNum = Random.Range(0,3);
+
+        if (randomNum == 0)
+        {
+            Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.left, Quaternion.identity);
+        }
+
+        if (randomNum == 1)
+        {
+            Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.right, Quaternion.identity);
+        }
+
+        if (randomNum == 2)
+        {
+            Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.left, Quaternion.identity);
+        }
+
+        if (randomNum == 3)
+        {
+            Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.right, Quaternion.identity);
+        }
+
     }
 }
