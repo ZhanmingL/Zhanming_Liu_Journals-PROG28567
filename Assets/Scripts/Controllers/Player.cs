@@ -10,11 +10,11 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombsTransform;
 
-    public float bombTrailSpacing;
-    public int numberOfTrailBombs;
-
     List<int> randomAccount = new List<int> { 0, 1, 2, 3 };
     bool canSpawn = true;
+
+    public float spacing;
+    public int number;
 
     void Update()
     {
@@ -32,9 +32,8 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.T))
         {
-            //The first bomb prefab spawns between a distance of bombTrailSpacing below the player.
-            Vector2 trailSpacing = new Vector2(0, bombTrailSpacing); //I created this vector to represent the distance.
-            SpawnBombTrail(trailSpacing);
+            
+            SpawnBombTrail(spacing, number);
         }
 
 
@@ -42,7 +41,7 @@ public class Player : MonoBehaviour
         {
             if (canSpawn == true) //if the List still have value in it, empty corner can spawn. Otherwise spawning is forbidden.
             {
-                SpawnBombOnRandomCorner(); //Randomly spawn bombs at corners.
+                SpawnBombOnRandomCorner(0); //Randomly spawn bombs at corners.
             }
         }
 
@@ -63,22 +62,23 @@ public class Player : MonoBehaviour
         Instantiate(bombPrefab, spawnPosition, Quaternion.identity); //Quaternion.identity = no rotation
     }
 
-    public void SpawnBombTrail(Vector2 spacing)
+    public void SpawnBombTrail(float inBombSpacing, int inNumberOfBombs)
     {
         //I used player's initial pos minus the spacing(shift down) to represent the first position to spawn.
-        Vector2 spawnTrailPos = (Vector2)transform.position - spacing;
+        Vector2 spawnTrailPos = (Vector2)transform.position;
+        spawnTrailPos.y -= inBombSpacing;
 
-        for (int i = 0; i < numberOfTrailBombs; i++)
+        for (int i = 0; i < inNumberOfBombs; i++)
         {
             //Spawn bomb. Repeating i times, depending by numberOfTrailBombs.
             Instantiate(bombPrefab, spawnTrailPos, Quaternion.identity);
             //The next time spawning, new bomb should shift down again by the same spacing
             //Othrewise they overlap at the same pos.
-            spawnTrailPos.y -= spacing.y;
+            spawnTrailPos.y -= inBombSpacing;
         }
     }
 
-    public void SpawnBombOnRandomCorner()
+    public void SpawnBombOnRandomCorner(float inDistance)
     {
         int randomNum = randomAccount[Random.Range(0, randomAccount.Count)]; //Randomly select a value from my List.
 
@@ -86,6 +86,11 @@ public class Player : MonoBehaviour
             {
                 //If selected 0, spawn a bomb at top left corner.
                 Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.left, Quaternion.identity);
+
+                //Didn't solve by float inDistance.
+                //inDistance = Mathf.Sqrt(Vector3.up.x * Vector3.up.x + Vector3.left.x * Vector3.left.x) + Mathf.Sqrt(Vector3.up.y * Vector3.up.y + Vector3.left.y * Vector3.left.y);
+                //Instantiate(bombPrefab, new Vector2(transform.position.x + inDistance, transform.position.y + inDistance), Quaternion.identity);
+
                 randomAccount.Remove(0); //remove from list!
             }
 
