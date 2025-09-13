@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (canSpawn == true)
+            if (canSpawn == true) //if the List still have value in it, empty corner can spawn. Otherwise spawning is forbidden.
             {
-                SpawnBombOnRandomCorner();
+                SpawnBombOnRandomCorner(); //Randomly spawn bombs at corners.
             }
         }
 
@@ -80,35 +80,39 @@ public class Player : MonoBehaviour
 
     public void SpawnBombOnRandomCorner()
     {
-        int randomNum = randomAccount[Random.Range(0, randomAccount.Count)];
+        int randomNum = randomAccount[Random.Range(0, randomAccount.Count)]; //Randomly select a value from my List.
 
             if (randomNum == 0)
             {
+                //If selected 0, spawn a bomb at top left corner.
                 Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.left, Quaternion.identity);
-                randomAccount.Remove(0);
+                randomAccount.Remove(0); //remove from list!
             }
 
             if (randomNum == 1)
             {
+                //If 1, top right corner.
                 Instantiate(bombPrefab, transform.position + Vector3.up + Vector3.right, Quaternion.identity);
-                randomAccount.Remove(1);
+                randomAccount.Remove(1); //remove from list!!
             }
 
             if (randomNum == 2)
             {
+                //2 bottom left
                 Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.left, Quaternion.identity);
-                randomAccount.Remove(2);
+                randomAccount.Remove(2); //remove from list!!!
             }
 
             if (randomNum == 3)
             {
+                //3 bottom right
                 Instantiate(bombPrefab, transform.position + Vector3.down + Vector3.right, Quaternion.identity);
-                randomAccount.Remove(3);
+                randomAccount.Remove(3); //remove from list!!!!!!!!!
             }
 
-            if (randomAccount.Count == 0)
+            if (randomAccount.Count == 0) //if all values from my list are deleted
             {
-                canSpawn = false;
+                canSpawn = false; //turn this bool to false, therefore no more bomb will be allowed to spawn.
             }
 
     }
