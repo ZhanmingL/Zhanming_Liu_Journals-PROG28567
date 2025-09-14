@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     public float asteroidsRange = 2.5f; //Check how long the calculated magnitude is, less or = than 2.5 then drawLine.
 
+    public float speed = 20f;
+
     void Update()
     {
         float speed = 0.5f;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
         Vector2 targetPosition = enemyTransform.position;
         Vector2 directionToMove = targetPosition - startPosition;
 
+        PlayerMove(speed);
 
         DetectAsteroids(asteroidsRange, asteroidTransforms); //Always check the distance between player and each asteroid.
 
@@ -65,6 +68,19 @@ public class Player : MonoBehaviour
             SpawnBombAtOffset(offset);
         }
     }
+
+    //I created this method in order to let player move. Once they move toward asteroids, we will see the codes' effect better and more clear.
+    //Also I may use this later for assignment, because my proposal may use this as well.
+    public void PlayerMove(float speed)
+    {
+        //Player's movement
+        Vector2 pos = transform.position;
+        pos.x += Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime; //A and B let player moves horizontally
+        pos.y += Input.GetAxisRaw("Vertical") * speed * Time.deltaTime; //W and S let player moves vertically
+        transform.position = pos;
+    }
+
+
 
     public void SpawnBombAtOffset(Vector2 inOffset)
     {
