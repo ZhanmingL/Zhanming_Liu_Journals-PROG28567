@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     public float ratio; //ratio of distance moving towards enemy from player's position. I will edit it as 0, 0.5 or 1, so on.
 
-    public float asteroidsRange = 2.5f;
+    public float asteroidsRange = 2.5f; //Check how long the calculated magnitude is, less or = than 2.5 then drawLine.
 
     void Update()
     {
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
         Vector2 directionToMove = targetPosition - startPosition;
 
 
-        DetectAsteroids(asteroidsRange, asteroidTransforms);
+        DetectAsteroids(asteroidsRange, asteroidTransforms); //Always check the distance between player and each asteroid.
 
 
         if (Input.GetKey(KeyCode.M))
@@ -161,21 +161,24 @@ public class Player : MonoBehaviour
 
     public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
     {
-        Vector3 both1 = asteroidTransforms[0].position - transform.position;
+        Vector3 both1 = asteroidTransforms[0].position - transform.position; //From playerPos, get direction towards this asteroid.
         float x1 = both1.x;
         float y1 = both1.y;
-        float magnitude1 = Mathf.Sqrt(both1.x * both1.x + both1.y * both1.y);
-        Vector2 endPos1 = transform.position + both1.normalized * 2.5f;
+        float magnitude1 = Mathf.Sqrt(both1.x * both1.x + both1.y * both1.y); //I have direction, so I can calculate the magnitude between player and this asteroid.
+        Vector3 endPos1 = transform.position + both1.normalized * 2.5f; //I cannot draw a line between player and asteroid, this is not what I want.
+        //As asteroid a direction, I want a line from player, towards this direction. Therefore, I get the end direction use by vector endPos.
         if (magnitude1 <= inMaxRange)
         {
-            Debug.DrawLine(transform.position, endPos1, Color.green);
+            Debug.DrawLine(transform.position, endPos1, Color.green); //Draw green line between them.
         }
 
+        //Repeating 20 times, I use this way is easy for thinking, but complecated in writting so many times.
+        //Maybe a type of loop can solve this situation. But I have no time remaining, I will try later or next time.
         Vector3 both2 = asteroidTransforms[1].position - transform.position;
         float x2 = both2.x;
         float y2 = both2.y;
         float magnitude2 = Mathf.Sqrt(both2.x * both2.x + both2.y * both2.y);
-        Vector2 endPos2 = transform.position + both2.normalized * 2.5f;
+        Vector3 endPos2 = transform.position + both2.normalized * 2.5f;
         if (magnitude2 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos2, Color.green);
@@ -185,7 +188,7 @@ public class Player : MonoBehaviour
         float x3 = both1.x;
         float y3 = both1.y;
         float magnitude3 = Mathf.Sqrt(both3.x * both3.x + both3.y * both3.y);
-        Vector2 endPos3 = transform.position + both3.normalized * 2.5f;
+        Vector3 endPos3 = transform.position + both3.normalized * 2.5f;
         if (magnitude3 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos3, Color.green);
@@ -195,7 +198,7 @@ public class Player : MonoBehaviour
         float x4 = both1.x;
         float y4 = both1.y;
         float magnitude4 = Mathf.Sqrt(both4.x * both4.x + both4.y * both4.y);
-        Vector2 endPos4 = transform.position + both4.normalized * 2.5f;
+        Vector3 endPos4 = transform.position + both4.normalized * 2.5f;
         if (magnitude4 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos4, Color.green);
@@ -205,7 +208,7 @@ public class Player : MonoBehaviour
         float x5 = both1.x;
         float y5 = both1.y;
         float magnitude5 = Mathf.Sqrt(both5.x * both5.x + both5.y * both5.y);
-        Vector2 endPos5 = transform.position + both5.normalized * 2.5f;
+        Vector3 endPos5 = transform.position + both5.normalized * 2.5f;
         if (magnitude5 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos5, Color.green);
@@ -215,7 +218,7 @@ public class Player : MonoBehaviour
         float x6 = both6.x;
         float y6 = both6.y;
         float magnitude6 = Mathf.Sqrt(both6.x * both6.x + both6.y * both6.y);
-        Vector2 endPos6 = transform.position + both6.normalized * 2.5f;
+        Vector3 endPos6 = transform.position + both6.normalized * 2.5f;
         if (magnitude6 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos6, Color.green);
@@ -225,7 +228,7 @@ public class Player : MonoBehaviour
         float x7 = both7.x;
         float y7 = both7.y;
         float magnitude7 = Mathf.Sqrt(both7.x * both7.x + both7.y * both7.y);
-        Vector2 endPos7 = transform.position + both7.normalized * 2.5f;
+        Vector3 endPos7 = transform.position + both7.normalized * 2.5f;
         if (magnitude7 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos7, Color.green);
@@ -235,7 +238,7 @@ public class Player : MonoBehaviour
         float x8 = both8.x;
         float y8 = both8.y;
         float magnitude8 = Mathf.Sqrt(both8.x * both8.x + both8.y * both8.y);
-        Vector2 endPos8 = transform.position + both8.normalized * 2.5f;
+        Vector3 endPos8 = transform.position + both8.normalized * 2.5f;
         if (magnitude8 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos8, Color.green);
@@ -245,7 +248,7 @@ public class Player : MonoBehaviour
         float x9 = both9.x;
         float y9 = both9.y;
         float magnitude9 = Mathf.Sqrt(both9.x * both9.x + both9.y * both9.y);
-        Vector2 endPos9 = transform.position + both9.normalized * 2.5f;
+        Vector3 endPos9 = transform.position + both9.normalized * 2.5f;
         if (magnitude9 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos9, Color.green);
@@ -255,7 +258,7 @@ public class Player : MonoBehaviour
         float x10 = both10.x;
         float y10 = both10.y;
         float magnitude10 = Mathf.Sqrt(both10.x * both10.x + both10.y * both10.y);
-        Vector2 endPos10 = transform.position + both10.normalized * 2.5f;
+        Vector3 endPos10 = transform.position + both10.normalized * 2.5f;
         if (magnitude10 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos10, Color.green);
@@ -265,7 +268,7 @@ public class Player : MonoBehaviour
         float x11 = both11.x;
         float y11 = both11.y;
         float magnitude11 = Mathf.Sqrt(both11.x * both11.x + both11.y * both11.y);
-        Vector2 endPos11 = transform.position + both11.normalized * 2.5f;
+        Vector3 endPos11 = transform.position + both11.normalized * 2.5f;
         if (magnitude11 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos11, Color.green);
@@ -275,7 +278,7 @@ public class Player : MonoBehaviour
         float x12 = both12.x;
         float y12 = both12.y;
         float magnitude12 = Mathf.Sqrt(both12.x * both12.x + both12.y * both12.y);
-        Vector2 endPos12 = transform.position + both12.normalized * 2.5f;
+        Vector3 endPos12 = transform.position + both12.normalized * 2.5f;
         if (magnitude12 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos12, Color.green);
@@ -285,7 +288,7 @@ public class Player : MonoBehaviour
         float x13 = both13.x;
         float y13 = both13.y;
         float magnitude13 = Mathf.Sqrt(both13.x * both13.x + both13.y * both13.y);
-        Vector2 endPos13 = transform.position + both13.normalized * 2.5f;
+        Vector3 endPos13 = transform.position + both13.normalized * 2.5f;
         if (magnitude13 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos13, Color.green);
@@ -295,7 +298,7 @@ public class Player : MonoBehaviour
         float x14 = both14.x;
         float y14 = both14.y;
         float magnitude14 = Mathf.Sqrt(both14.x * both14.x + both14.y * both14.y);
-        Vector2 endPos14 = transform.position + both14.normalized * 2.5f;
+        Vector3 endPos14 = transform.position + both14.normalized * 2.5f;
         if (magnitude14 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos14, Color.green);
@@ -305,7 +308,7 @@ public class Player : MonoBehaviour
         float x15 = both1.x;
         float y15 = both1.y;
         float magnitude15 = Mathf.Sqrt(both15.x * both15.x + both15.y * both15.y);
-        Vector2 endPos15 = transform.position + both15.normalized * 2.5f;
+        Vector3 endPos15 = transform.position + both15.normalized * 2.5f;
         if (magnitude15 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos15, Color.green);
@@ -315,7 +318,7 @@ public class Player : MonoBehaviour
         float x16 = both1.x;
         float y16 = both1.y;
         float magnitude16 = Mathf.Sqrt(both16.x * both16.x + both16.y * both16.y);
-        Vector2 endPos16 = transform.position + both16.normalized * 2.5f;
+        Vector3 endPos16 = transform.position + both16.normalized * 2.5f;
         if (magnitude16 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos16, Color.green);
@@ -325,7 +328,7 @@ public class Player : MonoBehaviour
         float x17 = both17.x;
         float y17 = both17.y;
         float magnitude17 = Mathf.Sqrt(both17.x * both17.x + both17.y * both17.y);
-        Vector2 endPos17 = transform.position + both17.normalized * 2.5f;
+        Vector3 endPos17 = transform.position + both17.normalized * 2.5f;
         if (magnitude17 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos17, Color.green);
@@ -335,7 +338,7 @@ public class Player : MonoBehaviour
         float x18 = both18.x;
         float y18 = both18.y;
         float magnitude18 = Mathf.Sqrt(both18.x * both18.x + both18.y * both18.y);
-        Vector2 endPos18 = transform.position + both18.normalized * 2.5f;
+        Vector3 endPos18 = transform.position + both18.normalized * 2.5f;
         if (magnitude18 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos18, Color.green);
@@ -345,7 +348,7 @@ public class Player : MonoBehaviour
         float x19 = both19.x;
         float y19 = both19.y;
         float magnitude19 = Mathf.Sqrt(both19.x * both19.x + both19.y * both19.y);
-        Vector2 endPos19 = transform.position + both19.normalized * 2.5f;
+        Vector3 endPos19 = transform.position + both19.normalized * 2.5f;
         if (magnitude19 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos19, Color.green);
@@ -355,7 +358,7 @@ public class Player : MonoBehaviour
         float x20 = both20.x;
         float y20 = both20.y;
         float magnitude20 = Mathf.Sqrt(both20.x * both20.x + both20.y * both20.y);
-        Vector2 endPos20 = transform.position + both20.normalized * 2.5f;
+        Vector3 endPos20 = transform.position + both20.normalized * 2.5f;
         if (magnitude20 <= inMaxRange)
         {
             Debug.DrawLine(transform.position, endPos20, Color.green);
