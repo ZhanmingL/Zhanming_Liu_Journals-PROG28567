@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,7 +21,21 @@ public class Player : MonoBehaviour
 
     public float asteroidsRange = 2.5f; //Check how long the calculated magnitude is, less or = than 2.5 then drawLine.
 
-    public float speed = 20f;
+    public float speed;
+
+    public float maxSpeed;
+    public float accelerationTime;
+
+    private float acceleration;
+
+    private float time;
+
+    public Vector3 velocity = new Vector3(0.5f, 0, 0);
+
+    private void Start()
+    {
+        acceleration = maxSpeed / accelerationTime;
+    }
 
     void Update()
     {
@@ -30,7 +45,7 @@ public class Player : MonoBehaviour
         Vector2 targetPosition = enemyTransform.position;
         Vector2 directionToMove = targetPosition - startPosition;
 
-        PlayerMove(speed);
+        PlayerMovement(speed);
 
         DetectAsteroids(asteroidsRange, asteroidTransforms); //Always check the distance between player and each asteroid.
 
@@ -41,7 +56,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if(Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             SpawnBombTrail(spacing, number);
         }
@@ -64,19 +79,49 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Vector2 offset = new Vector2(0,1);
+            Vector2 offset = new Vector2(0, 1);
             SpawnBombAtOffset(offset);
         }
+
+
+
+
+
+
+        //acceleration
+        Vector2 direction = Vector2.zero;
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            direction += Vector2.right;
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            direction += Vector2.up;
+        }
+
+        //if (Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    direction -= Vector2.right;
+        //}
+
+        //if (Input.GetKey(KeyCode.DownArrow))
+        //{
+        //    direction -= Vector2.right;
+        //}
+
+        direction = direction.normalized;
+        velocity += (Vector3)direction * acceleration * Time.deltaTime;
     }
 
-    //I created this method in order to let player move. Once they move toward asteroids, we will see the codes' effect better and more clear.
-    //Also I may use this later for assignment, because my proposal may use this as well.
-    public void PlayerMove(float speed)
+    public void PlayerMovement(float speed)
     {
         //Player's movement
         Vector2 pos = transform.position;
-        pos.x += Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime; //A and B let player moves horizontally
-        pos.y += Input.GetAxisRaw("Vertical") * speed * Time.deltaTime; //W and S let player moves vertically
+        pos.x += Input.GetAxisRaw("Horizontal") * velocity.x * Time.deltaTime;
+
+        pos.y += Input.GetAxisRaw("Vertical") * velocity.y * Time.deltaTime;
+        //a = v/s, v = d/s, d = vs, d = as`2
         transform.position = pos;
     }
 
