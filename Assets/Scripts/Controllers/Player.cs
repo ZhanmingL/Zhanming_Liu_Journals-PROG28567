@@ -25,8 +25,10 @@ public class Player : MonoBehaviour
 
     public float maxSpeed;
     public float accelerationTime;
+    public float decelerationTime;
 
     private float acceleration;
+    private float deceleration;
 
     private float time;
 
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
+        deceleration = maxSpeed / decelerationTime;
     }
 
     void Update()
@@ -110,19 +113,43 @@ public class Player : MonoBehaviour
         //    direction -= Vector2.right;
         //}
 
-        direction = direction.normalized;
-        velocity += (Vector3)direction * acceleration * Time.deltaTime;
+        //direction = direction.normalized;
+        //velocity += (Vector3)direction * acceleration * Time.deltaTime;
     }
 
     public void PlayerMovement(float speed)
     {
         //Player's movement
-        Vector2 pos = transform.position;
-        pos.x += Input.GetAxisRaw("Horizontal") * velocity.x * Time.deltaTime;
-
-        pos.y += Input.GetAxisRaw("Vertical") * velocity.y * Time.deltaTime;
+        Vector2 inputDirection = transform.position;
+        inputDirection.x = Input.GetAxisRaw("Horizontal");
+        inputDirection.y = Input.GetAxisRaw("Vertical");
         //a = v/s, v = d/s, d = vs, d = as`2
-        transform.position = pos;
+
+        if(inputDirection != Vector2.zero) //if wasd/arrows pressed/holding, the value is received
+        {
+            velocity += (Vector3)inputDirection.normalized * acceleration * Time.deltaTime; //moves towardd that direction
+            if(velocity.magnitude > maxSpeed) //There is a maximum speed, reach that, then keep that speed, not increasing again.
+            {
+                velocity = velocity.normalized * maxSpeed;
+            }
+        }
+        else //if key without input
+        {
+            if(velocity.magnitude > 0) //Should be velocity value to decrease.
+            {
+                Vector3 deVelocity = velocity.normalized * deceleration * Time.deltaTime;
+                if(deVelocity.magnitude > velocity.magnitude) //if there is no more velocity to decrease
+                {
+                    velocity = Vector3.zero; //player stops
+                }
+                else
+                {
+                    velocity -= deVelocity; //otherwise keep decreasing.
+                }
+            }
+        }
+
+        transform.position += velocity * Time.deltaTime;
     }
 
 
