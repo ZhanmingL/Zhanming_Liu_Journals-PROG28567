@@ -23,14 +23,15 @@ public class Player : MonoBehaviour
 
     public float speed;
 
-    public float maxSpeed;
+    //public float maxSpeed;
+    public float maxSpeed = 10f;
     public float accelerationTime;
     public float decelerationTime;
 
     private float acceleration;
     private float deceleration;
 
-    private float time;
+    //private float time;
 
     public Vector3 velocity = new Vector3(0.5f, 0, 0);
 
@@ -92,16 +93,16 @@ public class Player : MonoBehaviour
 
 
         //acceleration
-        Vector2 direction = Vector2.zero;
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            direction += Vector2.right;
-        }
+        //Vector2 direction = Vector2.zero;
+        //if (Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    direction += Vector2.right;
+        //}
 
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            direction += Vector2.up;
-        }
+        //if (Input.GetKey(KeyCode.UpArrow))
+        //{
+        //    direction += Vector2.up;
+        //}
 
         //if (Input.GetKey(KeyCode.LeftArrow))
         //{
