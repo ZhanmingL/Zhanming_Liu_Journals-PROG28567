@@ -24,7 +24,7 @@ public class Asteroid : MonoBehaviour
     public void MoveAsteroid()
     {
         maxFloatDistance = Vector3.Distance(transform.position, randomPoint); //magnitude distance between asteroid and that random point
-        Debug.Log(maxFloatDistance);
+        //Debug.Log(maxFloatDistance);
 
         if (maxFloatDistance > arrivalDistance)
         { //if bigger than 0.2 which means not arrived at random point yet, keeping moving asteroid

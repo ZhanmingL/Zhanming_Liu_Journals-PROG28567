@@ -35,6 +35,12 @@ public class Player : MonoBehaviour
 
     public Vector3 velocity = new Vector3(0.5f, 0, 0);
 
+
+
+    public float radius; //Radar radius
+
+
+
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
@@ -43,6 +49,30 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        
+        
+
+        for(int i = 0; i < 360; i++)
+        {
+            float degrees = i;
+            float degreeToRadians = degrees * Mathf.Deg2Rad;
+            float x = Mathf.Cos(degreeToRadians);
+            float y = Mathf.Sin(degreeToRadians);
+
+            Vector3 circlePoint = new Vector3(x + i, y + i, 0) * radius + transform.position;
+            Vector3 newCirclePoint = new Vector3(x + i + 1, y + i + 1, 0) * radius + transform.position;
+            Debug.DrawLine(circlePoint, newCirclePoint, Color.green);
+        }
+
+
+
+
+
+
+
+
+
+
         float speed = 0.5f;
 
         Vector2 startPosition = transform.position; //player position
