@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
+    public GameObject powerUp;
     public Transform bombsTransform;
 
     List<int> randomAccount = new List<int> { 0, 1, 2, 3 }; //Four numbers hold four corners. Make this List's numbers random, therefore corners spawning will be random.
@@ -40,12 +41,15 @@ public class Player : MonoBehaviour
     public float radius = 5f; //Radar radius
     public int circlePoint = 10;
 
+    public int powerUpNum;
+
 
 
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
         deceleration = maxSpeed / decelerationTime;
+        SpawnPowerups(radius - 1, powerUpNum);
     }
 
     void Update()
@@ -174,6 +178,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        float averageDegree = 360 / numberOfPowerups;
+        float averageRadian = Mathf.Deg2Rad * averageDegree;
+        
+
+        for(int i = 0; i < numberOfPowerups; i++)
+        {
+            float x = Mathf.Cos(averageRadian * i);
+            float y = Mathf.Sin(averageRadian * i);
+            Vector2 generatePoint = new Vector2(x, y) + (Vector2)transform.position;
+            Instantiate(powerUp, generatePoint, Quaternion.identity);
+        }
+    }
 
 
 
