@@ -183,7 +183,6 @@ public class Player : MonoBehaviour
         float averageDegree = 360 / numberOfPowerups;
         float averageRadian = Mathf.Deg2Rad * averageDegree;
         
-
         for(int i = 0; i < numberOfPowerups; i++)
         {
             float x = Mathf.Cos(averageRadian * i);
