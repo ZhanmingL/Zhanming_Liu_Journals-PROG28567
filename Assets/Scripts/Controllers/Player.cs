@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        EnemyRadar(radius, circlePoint);
+        EnemyRadar(radius, circlePoint); //Run radar every frame.
 
 
 
@@ -139,34 +139,41 @@ public class Player : MonoBehaviour
         //velocity += (Vector3)direction * acceleration * Time.deltaTime;
     }
 
-    public void EnemyRadar(float radius, int circlePoints)
+    public void EnemyRadar(float radius, int circlePoints) //circlePoints - Ammounts of edges that I want, I want 10 in this case.
     {
-        float averageAngle = 360 / circlePoints;
+        float averageAngle = 360 / circlePoints; //36 degrees per each angle
 
-        for(int i = 0; i < circlePoints;  i++)
+        float magnitude = Vector2.Distance(enemyTransform.position, transform.position); //check magnitude between player and enemy.
+
+        Color radarColor = Color.green; //reference, change color when enemy within Radar.
+
+        if(magnitude < radius) //within Radar
         {
-            float angle2Radians = i * averageAngle * Mathf.Deg2Rad;
+            radarColor = Color.red; //change color to red
+        }
+
+        for (int i = 0; i < circlePoints;  i++) //Draw lines 10 times.
+        {
+            float angle2Radians = i * averageAngle * Mathf.Deg2Rad; //Transfer degree to radian, then get this radian's position
             float x = Mathf.Cos(angle2Radians);
             float y = Mathf.Sin(angle2Radians);
             Vector2 pointOne = new Vector2(x, y);
-            pointOne *= radius;
-            pointOne += (Vector2)transform.position;
-            int index = i + 1;
-            if(index == circlePoints)
-            {
-                index = 0;
-            }
-            float nextPointRadian = index * averageAngle * Mathf.Deg2Rad;
+            pointOne *= radius; //Extend to what radius I want.
+            pointOne += (Vector2)transform.position; //Follow palyer
+
+            int index = i + 1; //Next point, get next degree
+            float nextPointRadian = index * averageAngle * Mathf.Deg2Rad; //Get next point's position.
             float nextX = Mathf.Cos(nextPointRadian);
             float nextY = Mathf.Sin(nextPointRadian);
             Vector2 pointTwo = new Vector2(nextX, nextY);
             pointTwo *= radius;
             pointTwo += (Vector2)transform.position;
 
-            Debug.DrawLine(pointOne, pointTwo, Color.green);
+            Debug.DrawLine(pointOne, pointTwo, radarColor);
 
         }
     }
+
 
 
 
