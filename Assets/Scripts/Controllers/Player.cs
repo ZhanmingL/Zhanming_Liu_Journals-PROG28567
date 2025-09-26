@@ -37,7 +37,8 @@ public class Player : MonoBehaviour
 
 
 
-    public float radius; //Radar radius
+    public float radius = 5f; //Radar radius
+    public int circlePoint = 10;
 
 
 
@@ -49,20 +50,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
-        
 
-        for(int i = 0; i < 360; i++)
-        {
-            float degrees = i;
-            float degreeToRadians = degrees * Mathf.Deg2Rad;
-            float x = Mathf.Cos(degreeToRadians);
-            float y = Mathf.Sin(degreeToRadians);
+        EnemyRadar(radius, circlePoint);
 
-            Vector3 circlePoint = new Vector3(x + i, y + i, 0) * radius + transform.position;
-            Vector3 newCirclePoint = new Vector3(x + i + 1, y + i + 1, 0) * radius + transform.position;
-            Debug.DrawLine(circlePoint, newCirclePoint, Color.green);
-        }
+
 
 
 
@@ -147,6 +138,37 @@ public class Player : MonoBehaviour
         //direction = direction.normalized;
         //velocity += (Vector3)direction * acceleration * Time.deltaTime;
     }
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        float averageAngle = 360 / circlePoints;
+
+        for(int i = 0; i < circlePoints;  i++)
+        {
+            float angle2Radians = i * averageAngle * Mathf.Deg2Rad;
+            float x = Mathf.Cos(angle2Radians);
+            float y = Mathf.Sin(angle2Radians);
+            Vector2 pointOne = new Vector2(x, y);
+            pointOne *= radius;
+            pointOne += (Vector2)transform.position;
+            int index = i + 1;
+            if(index == circlePoints)
+            {
+                index = 0;
+            }
+            float nextPointRadian = index * averageAngle * Mathf.Deg2Rad;
+            float nextX = Mathf.Cos(nextPointRadian);
+            float nextY = Mathf.Sin(nextPointRadian);
+            Vector2 pointTwo = new Vector2(nextX, nextY);
+            pointTwo *= radius;
+            pointTwo += (Vector2)transform.position;
+
+            Debug.DrawLine(pointOne, pointTwo, Color.green);
+
+        }
+    }
+
+
 
     public void PlayerMovement(float speed)
     {
