@@ -45,8 +45,8 @@ public class AnotherTurret : MonoBehaviour
         float angleRemaining = Mathf.DeltaAngle(turretAngle, enemyAngle); //I got angle that need to rotate
         float changeInAngle;
 
-        //If dot I got is positive
-        //The object is on the left half and rotate to the left
+        //If dot I got is negative
+        //Rotating speed -> decreasing per frame due to rotating to the left
         if (getDot < 0)
         {
             //Rotating left hand part if dot < 0

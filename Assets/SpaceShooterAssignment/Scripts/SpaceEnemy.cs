@@ -21,6 +21,7 @@ public class SpaceEnemy : MonoBehaviour
     {
         //The logic of enemy move: does enemy need to increase/decrease speed? moving backward in order to charge, then rush/sprint towards player!
         AdjustSpeed();
+        TowardingPlayer(speed * 3f);
         enemyWait();
         enemyRush();
     }
@@ -83,5 +84,53 @@ public class SpaceEnemy : MonoBehaviour
     public void SetDeceleration(float deceleration) //When bullet touches enemy -> "Bullet" script
     {
         this.deceleration = deceleration;
+    }
+
+    public void TowardingPlayer(float speed) //Enemy is always looking player
+    {
+        Vector3 direction = (player.position - transform.position).normalized; //Get direction of enemy facing player first
+        float getDot = Vector3.Dot(transform.right, direction); //Check where is player, on the enemy's left/right side?
+        float enemyAngle = Mathf.Rad2Deg * Mathf.Atan2(transform.up.y, transform.up.x); //current angle of enemy
+        float playerAngle = Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x); //player's angle
+        float angleRemaining = Mathf.DeltaAngle(enemyAngle, playerAngle); //I got angle that need to rotate
+        float changeInAngle;
+
+        //If dot I got is positive
+        //player is on the right half and rotate to the right
+        if (getDot > 0)
+        {
+            //Rotating speed -> ddecreasing per frame due to rotating to the right
+            changeInAngle = -speed * Time.deltaTime;
+
+            //I don't want over-rotating, so let's check
+            //If no more angle to rotate
+            if (changeInAngle < angleRemaining)
+            {
+                //no rotating, keep towarding to the target
+                transform.Rotate(0f, 0f, angleRemaining);
+            }
+            else //If it wouldn't over-rotating
+            {
+                //keep rotate
+                transform.Rotate(0f, 0f, changeInAngle);
+            }
+
+
+        }
+        else
+        {
+            //Move to the left
+            changeInAngle = speed * Time.deltaTime;
+
+            //Check as well -> no over-rotating
+            if (changeInAngle > angleRemaining)
+            {
+                transform.Rotate(0f, 0f, angleRemaining);
+            }
+            else
+            {
+                transform.Rotate(0f, 0f, changeInAngle);
+            }
+        }
     }
 }
