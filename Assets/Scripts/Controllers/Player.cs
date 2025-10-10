@@ -57,17 +57,6 @@ public class Player : MonoBehaviour
 
         EnemyRadar(radius, circlePoint); //Run radar every frame.
 
-
-
-
-
-
-
-
-
-
-
-
         float speed = 0.5f;
 
         Vector2 startPosition = transform.position; //player position

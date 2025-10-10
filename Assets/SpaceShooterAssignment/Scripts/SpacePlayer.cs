@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour
+public class SpacePlayer : MonoBehaviour
 {
     public Transform enemyTransform;
     public GameObject bulletPrefab;
@@ -39,11 +39,6 @@ public class Player : MonoBehaviour
 
         //The logic - within magnitude - allow shoot - press button to shoot - update bullet moving
         checkMagnitude();
-        if (canShoot)
-        {
-            shootBullet();
-        }
-        shootBullet();
     }
 
     //if distance between enemy & player is within the allowing magnitude
@@ -66,19 +61,10 @@ public class Player : MonoBehaviour
     {
         if(canShoot)
         {
+            //Spawn bomb and initialize their direction and velocity
             newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            shoot = true;
-        }
-    }
-
-    //Bullet moving
-    public void shootBullet()
-    {
-        if(shoot)
-        {
-            Vector3 targetDirection = (Vector2)enemyTransform.position - (Vector2)transform.position;
-
-            newBullet.transform.position += targetDirection.normalized * bulletMaxSpeed * Time.deltaTime;
+            newBullet.GetComponent<Bullet>().SetTarget(enemyTransform);
+            newBullet.GetComponent<Bullet>().SetVelocity((enemyTransform.position - transform.position).normalized * 3f); //Initial velocity includes both direction & speed
         }
     }
 
