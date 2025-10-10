@@ -564,6 +564,8 @@ MonoBehaviour:
   bulletMaxSpeed: 2
   bulletAccelerationTime: 0
   bulletDecelerationTime: 0
+  turret1: {fileID: 2118714360}
+  turret2: {fileID: 936086268}
 --- !u!4 &555736802 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408196811525658, guid: abc125f00ae369940b2c5c0275186637, type: 3}

@@ -25,6 +25,10 @@ public class SpacePlayer : MonoBehaviour
     public float bulletAccelerationTime;
     public float bulletDecelerationTime;
 
+    public Transform turret1;
+    public Transform turret2;
+    float turretNumber = 0f; //Shooting bullet, the one that spawn bullet
+
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
@@ -59,13 +63,32 @@ public class SpacePlayer : MonoBehaviour
     //Allow shoot, allow press the button
     public void shootButtonDown()
     {
-        if(canShoot)
+        if(turretNumber == 0)
         {
-            //Spawn bomb and initialize their direction and velocity
-            newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            newBullet.GetComponent<Bullet>().SetTarget(enemyTransform);
-            newBullet.GetComponent<Bullet>().SetVelocity((enemyTransform.position - transform.position).normalized * 3f); //Initial velocity includes both direction & speed
+            if (canShoot)
+            {
+                //Spawn bomb and initialize their direction and velocity
+                newBullet = Instantiate(bulletPrefab, turret1.position, Quaternion.identity);
+                newBullet.GetComponent<Bullet>().SetTarget(enemyTransform);
+                newBullet.GetComponent<Bullet>().SetVelocity((enemyTransform.position - transform.position).normalized * 3f); //Initial velocity includes both direction & speed
+            }
         }
+        else
+        {
+            if (canShoot)
+            {
+                newBullet = Instantiate(bulletPrefab, turret2.position, Quaternion.identity);
+                newBullet.GetComponent<Bullet>().SetTarget(enemyTransform);
+                newBullet.GetComponent<Bullet>().SetVelocity((enemyTransform.position - transform.position).normalized * 3f);
+            }
+        }
+
+        turretNumber++;
+        if(turretNumber == 2)
+        {
+            turretNumber = 0f;
+        }
+        
     }
 
 
