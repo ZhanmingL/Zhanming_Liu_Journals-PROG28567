@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         Vector3 direction = (enemy.position - transform.position).normalized;
 
         //Increase velocity -> acceleration
-        float magnitude = velocity.magnitude; //Enemy's moving magnitude
+        float magnitude = velocity.magnitude; //current moving magnitude
         magnitude += acceleration * Time.deltaTime; //magnitude plus one per frame
         velocity = direction * magnitude; //plused magnitude towards direction is velocity -> accelerating
 
